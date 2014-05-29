@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class PushBullet {
 	private $_apiKey;
@@ -27,7 +27,7 @@ class PushBullet {
 
 	public function pushLink($recipient, $title, $url, $body = NULL)
 	{
-		return $this->_push($recipient, 'link', $title, $body);
+		return $this->_push($recipient, 'link', $title, $url, $body);
 	}
 
 	public function pushAddress($recipient, $name, $address)

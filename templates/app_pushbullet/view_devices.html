@@ -1,0 +1,68 @@
+﻿<form action="?" method="post" name="frmEdit" class="form-horizontal" id="sender">
+	[#if ERR#]
+	<div class="alert alert-error"><#LANG_FILLOUT_REQURED#></div>
+	[#endif ERR#]
+	<div class="control-group">
+		<label class="control-label" [#if ERR#] style="color:red;font-weight:bold"[#endif#]>API Key:</label>
+		<div class="controls">
+			<input type="text" name="API_Key" value="[#API_KEY#]" size=50><a href=https://www.pushbullet.com/account>Получить</a>
+		</div>
+		</div>
+
+		<div class="form-actions">
+		<button class="btn" type="submit" name="submit"><i class="icon-plus"></i>Импортировать устройства</button>
+		<!--<a class="btn" href="?mode=import" onclick="javascript:document.getElementById('sender').submit();"><i class="icon-plus" ></i>Импортировать устройства</a>-->
+		<!--<a href="?mode=import" onclick="javascript:document.getElementById('sender').submit();"><input type="button" value="Go" /></a>-->
+		<a class="btn" href="?mode=reset" onClick="return confirm('<#LANG_ARE_YOU_SURE#>')"><#LANG_RESET_TO_DEFAULT#></a>
+		<input type="hidden" name="mode" value="update">
+	</div>
+</form>
+<!--#[#IDEN#][#MODEL#]#-->
+
+[#if RESULT#]
+
+<table  align=center class="table table-condensed">
+<tbody>
+<tr>
+<td height=10 align=center>
+<b>API Key</b>
+</td>
+<td height=10 align=center>
+<b>Iden</b>
+</td>
+<td align=center>
+<b>Name</b>
+</td>
+</tr>
+[#begin RESULT#]
+<tr>
+<td height=10 align=center>
+[#apikey#] 
+</td>
+<td height=10 align=center>
+[#iden#] 
+</td>
+<td align=center>
+[#name#]
+</td>
+[#if "<#ACTION#>"=="admin"#]
+<td width="1%">
+<a href="?view_mode=edit_devices&id=[#ID#]"  title="<#LANG_EDIT#>"><i class="icon-pencil"></i></a>
+</td> 
+<td width="1%">
+<a href="?view_mode=delete_devices&id=[#ID#]" onClick="return confirm('<#LANG_ARE_YOU_SURE#>')" title="<#LANG_DELETE#>"><i class="icon-remove"></i></a>
+</td>
+[#endif ACTION#]
+</tr>
+[#end RESULT#]
+
+</tbody>
+</table>
+
+[#else RESULT#]
+<p>
+<font color="red">Устройств не найдено</font>
+</p>
+[#endif RESULT#]
+<!-- / results -->
+</td></tr></table>

@@ -1,0 +1,13 @@
+<!--#
+ @version 0.2 (auto-set)
+#-->
+<big>PushBullet</big>
+<hr size="1">
+
+[#if VIEW_MODE="view_devices" || VIEW_MODE=""#]
+	[#inc view_devices.html#]
+[#endif VIEW_MODE#]
+
+[#if VIEW_MODE="edit_devices"#]
+	[#inc edit_devices.html#]
+[#endif VIEW_MODE#]		
