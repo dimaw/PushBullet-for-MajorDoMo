@@ -1,5 +1,6 @@
 PushBullet for MajorDoMo
 ========================
+Доведенный мною до работоспособного состояния форк dimaw/PushBullet-for-MajorDoMo
 Для взаимодействия с сервисом PushBullet использована библиотека: https://github.com/ivkos/PushBullet-for-PHP
 
 ##Требования:
