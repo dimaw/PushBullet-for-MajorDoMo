@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once('PushBullet.class.php');
 
 function push_note($device, $title, $body) {
@@ -8,6 +8,16 @@ function push_note($device, $title, $body) {
 		$p = new PushBullet($rec['apikey']);
 		$p->pushNote($rec['iden'], $title, $body);
 	}
+}
+
+function push_note_to_all($title, $body) {
+	$table_name = 'app_pushbullet';
+	$recs = SQLSelect("SELECT * FROM $table_name");
+	foreach($recs as $rec) {
+	if ($rec['ID']) {
+		$p = new PushBullet($rec['apikey']);
+		$p->pushNote($rec['iden'], $title, $body);
+	}}
 }
 
 function push_list($devices, $title, $items) {
@@ -149,6 +159,7 @@ class app_pushbullet extends module {
 	  $p=new parser(DIR_TEMPLATES.$this->name."/".$this->name.".html", $this->data, $this);
 	  $this->result=$p->result;
 	}
+	
 
 
 	function admin(&$out) {
@@ -169,7 +180,7 @@ class app_pushbullet extends module {
 					$rec = array();
 					$rec['apikey']=$API_Key;
 					$rec['iden']=$devices['devices'][$i]['iden'];
-					$rec['name']=$devices['devices'][$i]['extras']['model'];
+					$rec['name']=$devices['devices'][$i]['nickname'];
 					if ($rec['iden'] == '') {
 						$rec_ok = 0;
 					}
