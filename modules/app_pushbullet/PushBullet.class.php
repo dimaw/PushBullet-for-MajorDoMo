@@ -206,7 +206,8 @@ class PushBullet {
 
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		}
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		if (IsWindowsOS())
+        {
 			curl_setopt($curl, CURLOPT_CAINFO,ROOT . 'modules\app_pushbullet\ca-bundle.crt');
 		}
 		
