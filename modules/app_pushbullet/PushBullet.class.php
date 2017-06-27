@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class PushBullet {
 	private $_apiKey;
@@ -12,7 +12,7 @@ class PushBullet {
 	public function __construct($apiKey)
 	{
 		$this->_apiKey = $apiKey;
-
+		
 		if (!function_exists('curl_init')) {
 			throw new PushBulletException('cURL library is not loaded.');
 		}
@@ -177,11 +177,16 @@ class PushBullet {
 	private function _curlRequest($url, $method, $data = NULL, $sendAsJSON = TRUE, $auth = TRUE)
 	{
 		$curl = curl_init();
-
+		
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+					'Content-Type: application/json',
+					'Access-Token: ' . $this->_apiKey
+				));
 		if ($method == 'GET' && $data !== NULL) {
 			$url .= '?' . http_build_query($data);
+			
 		}
-
+		
 		curl_setopt($curl, CURLOPT_URL, $url);
 
 		if ($auth) {
@@ -201,10 +206,13 @@ class PushBullet {
 
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		}
-
+		if (IsWindowsOS())
+        {
+			curl_setopt($curl, CURLOPT_CAINFO,ROOT . 'modules\app_pushbullet\ca-bundle.crt');
+		}
+		
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_HEADER, FALSE);
-
+		
 		$response = curl_exec($curl);
 
 		if ($response === FALSE) {
@@ -221,8 +229,8 @@ class PushBullet {
 		}
 
 		curl_close($curl);
-
-		return json_decode($response);
+		
+		return json_decode($response, true);
 	}
 }
 
